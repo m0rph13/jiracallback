@@ -31,7 +31,7 @@ public class HelloWorld {
 
 
 		JerseyJiraRestClientFactory f = new JerseyJiraRestClientFactory();
-		JiraRestClient jc = f.createWithBasicHttpAuthentication(new URI("http://access.istone.se"), "jenkins.callback@istone.se", "Foppa1338");
+		JiraRestClient jc = f.createWithBasicHttpAuthentication(new URI("http://access.istone.se"), "", "");
 
 		SearchResult r = jc.getSearchClient().searchJql("fixVersion=\"Sprint 24_3\"", null);
 
