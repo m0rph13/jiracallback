@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class UpdateJiraByVersionTask extends Task
 {
 	private static final Logger LOG = Logger.getLogger(UpdateJiraByVersionTask.class);
@@ -89,9 +91,9 @@ public class UpdateJiraByVersionTask extends Task
 			for (BasicIssue basicIssue : r.getIssues())
 			{
 				Issue issue = jc.getIssueClient().getIssue((basicIssue).getKey(), null);
-				LOG.debug("Issue: " + issue.getKey() + " " + issue.getSummary() + " about to get updated");
 				List<FieldInput> fields = new ArrayList<FieldInput>();
 				fields.add(new FieldInput(jiraEnvironmentField, formattedDate));
+				LOG.debug(format("Setting %s to %s for issue %s",jiraEnvironmentField,formattedDate,issue.getKey()));
 				issueClient.update(issue, fields, null);
 			}
 		} catch (Exception e)

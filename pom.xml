@@ -4,7 +4,7 @@
     <groupId>se.istone</groupId>
     <artifactId>jiracallback</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <repositories>
         <repository>
             <id>atlassian.com</id>
@@ -27,6 +27,16 @@
             <artifactId>jira-rest-java-client</artifactId>
             <version>1.1-m02</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+        </dependency>
 
 
     </dependencies>
@@ -34,11 +44,17 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <finalName>full-${artifactId}-${version}</finalName>
                 </configuration>
             </plugin>
         </plugins>
