@@ -79,24 +79,24 @@ public class UpdateJiraByVersionTask extends Task
 		{
 			final DateTime dateTime = new DateTime(new Date());
 
-			String formattedDate = formatter.print(dateTime);
+			final String formattedDate = formatter.print(dateTime);
 
-			JerseyJiraRestClientFactory f = new JerseyJiraRestClientFactory();
-			JiraRestClient jc = f.createWithBasicHttpAuthentication(new URI(URL), username, password);
+			final JerseyJiraRestClientFactory f = new JerseyJiraRestClientFactory();
+			final JiraRestClient jc = f.createWithBasicHttpAuthentication(new URI(URL), username, password);
 
-			SearchResult r = jc.getSearchClient().searchJql("fixVersion=\"" + fixVersion + "\"", null);
+			final SearchResult r = jc.getSearchClient().searchJql("fixVersion=\"" + fixVersion + "\"", null);
 
-			IssueRestClient issueClient = jc.getIssueClient();
+			final IssueRestClient issueClient = jc.getIssueClient();
 
-			for (BasicIssue basicIssue : r.getIssues())
+			for (final BasicIssue basicIssue : r.getIssues())
 			{
-				Issue issue = jc.getIssueClient().getIssue((basicIssue).getKey(), null);
+				final Issue issue = jc.getIssueClient().getIssue((basicIssue).getKey(), null);
 				List<FieldInput> fields = new ArrayList<FieldInput>();
 				fields.add(new FieldInput(jiraEnvironmentField, formattedDate));
 				LOG.debug(format("Setting %s to %s for issue %s",jiraEnvironmentField,formattedDate,issue.getKey()));
 				issueClient.update(issue, fields, null);
 			}
-		} catch (Exception e)
+		} catch (final Exception e)
 		{
 			throw new BuildException(e);
 		}
